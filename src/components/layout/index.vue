@@ -10,53 +10,27 @@
       <el-main class="content-div-class">
         <Content />
       </el-main>
-      <el-footer class="footer-class">{{ date() }}</el-footer>
+      <el-footer class="footer-class">{{ footerText }}</el-footer>
     </el-container>
   </el-container>
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
 import Sider from './components/Sider.vue'
 import Header from './components/Header.vue'
 import Content from './components/Content.vue'
-export default defineComponent({
-  components: {
-    Sider,
-    Header,
-    Content
-  },
-  setup() {
-    const date = (): string => {
-      const date = new Date()
-      let month: string | number = date.getMonth() + 1
-      let strDate: string | number = date.getDate()
+import { onMounted, ref } from 'vue'
 
-      if (month <= 9) {
-        month = '0' + month
-      }
-      if (strDate <= 9) {
-        strDate = '0' + strDate
-      }
+const footerText = ref<string>('')
+const getRandomSC = () => {
+  fetch('https://api.7585.net.cn/shici/api.php')
+    .then((response) => response.json())
+    .then((json) => {
+      footerText.value = json.hitokoto + '   --  ' + json.source
+    })
+}
 
-      return (
-        date.getFullYear() +
-        '-' +
-        month +
-        '-' +
-        strDate +
-        '  ' +
-        date.getHours() +
-        ':' +
-        date.getMinutes() +
-        ':' +
-        date.getSeconds()
-      )
-    }
-
-    return {
-      date
-    }
-  }
+onMounted(() => {
+  getRandomSC()
 })
 </script>
 
@@ -64,17 +38,25 @@ export default defineComponent({
 @import '../../styles/variables.scss';
 .layout-class {
   height: 100vh;
+  letter-spacing: $letter-spacing;
   .container-content-class {
     .header-class {
-      height: $sider-height;
+      height: 6vh;
+      min-height: $sider-height;
     }
     .content-div-class {
       border: 10px solid #f2f3f5;
     }
     .footer-class {
-      height: 25px;
+      min-height: 25px;
+      height: 4vh;
+      line-height: 4vh;
+      text-align: center;
       margin: 0 auto;
     }
   }
+}
+.dark .footer-class {
+  color: var(--el-menu-text-color);
 }
 </style>
