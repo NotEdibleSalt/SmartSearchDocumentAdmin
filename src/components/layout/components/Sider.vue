@@ -1,21 +1,26 @@
 <template>
   <div class="sider-title">{{ $t('sider.title') }}</div>
-  <el-menu mode="vertical" @click="clickMenuItem">
+  <el-menu :router="true">
     <SiderItem v-for="route in routers" :menuInfo="route" :key="route.key" />
   </el-menu>
 </template>
 <script setup lang="ts">
-import router from '@/router'
 import SiderItem from './SiderItem.vue'
 import { computed } from 'vue'
-// import { getMenuTree } from '@/utils/MenuUtil'
 
 const routers = computed(() => {
   return [
     {
       key: 'asdf',
       title: 'aasda',
-      routePath: '/aa'
+      routePath: '/aa',
+      children: [
+        {
+          key: '123',
+          title: '系统管理',
+          routePath: '/aa'
+        }
+      ]
     },
     {
       key: '123',
@@ -24,22 +29,14 @@ const routers = computed(() => {
     }
   ]
 })
-
-const clickMenuItem = (menuItem: { key: string }): void => {
-  router.push(menuItem.key)
-}
 </script>
 
 <style lang="scss" scope>
-@import '../../../styles/globle.scss';
+@import '../../../styles/variables.scss';
 .sider-title {
   height: $sider-height;
   line-height: $sider-height;
   text-align: center;
   background-image: linear-gradient(to right, #ec4887, #a25ab0);
-}
-
-.el-menu {
-  border-right: solid 0px #fff;
 }
 </style>

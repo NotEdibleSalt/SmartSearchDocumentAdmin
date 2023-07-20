@@ -61,26 +61,19 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scope>
-@import '../../styles/globle.scss';
+@import '../../styles/variables.scss';
 .layout-class {
   height: 100vh;
-  background: $globle-background-color;
-  .sider-class {
-    background: #ffffff;
-  }
-
   .container-content-class {
     .header-class {
-      background: #ffffff;
       height: $sider-height;
     }
     .content-div-class {
-      background: #ffffff;
-      margin: 20px;
+      border: 10px solid #f2f3f5;
     }
     .footer-class {
-      background: #ffffff;
       height: 25px;
+      margin: 0 auto;
     }
   }
 }

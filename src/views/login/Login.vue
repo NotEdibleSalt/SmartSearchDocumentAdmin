@@ -37,13 +37,14 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus/es/components/form'
-// import { login } from "@/api/login";
-// import { setStorage } from "@/utils/storage";
+import { loginApi } from '@/api/account'
+import { setLocalStorage } from '@/utils/storage'
+import router from '@/router'
 
 const formRef = ref<FormInstance>()
 const formState = reactive({
-  username: '',
-  password: ''
+  username: 'admin',
+  password: '12345678'
 })
 
 const resetForm = (formEl: FormInstance | undefined) => {
@@ -51,14 +52,15 @@ const resetForm = (formEl: FormInstance | undefined) => {
   formEl.resetFields()
 }
 
-const login = (formEl: FormInstance | undefined) => {
-  // login(formState.data.username, formState.data.password).then((result: any) => {
-  //   message.success('登录成功', 3)
-  //   setStorage('token', result)
-  //   router.push('/')
-  // })
+const login = async (formEl: FormInstance | undefined) => {
+  const b = await formEl?.validate()
+  if (!b) {
+    return
+  }
 
-  throw new Error('验证失败')
+  const result = await loginApi(formState)
+  setLocalStorage('token', result.data)
+  // router.push('/')
 }
 </script>
 
@@ -88,3 +90,4 @@ const login = (formEl: FormInstance | undefined) => {
   }
 }
 </style>
+@/api/account

@@ -1,7 +1,7 @@
 import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 import type { SelectOptionI } from '@/types/globle'
-import { getBrowserLang } from '@/utils'
+import { getBrowserLang } from '@/utils/lang'
 
 export const useViewConfigStore = defineStore('viewConfig', () => {
   const viewConfig = reactive({
