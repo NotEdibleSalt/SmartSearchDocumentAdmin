@@ -1,6 +1,7 @@
 {
+  "allowJs": true,
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/**/*.ts", "src/**/*.d.ts","src/**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.vue", "src/**/*.d.ts"],
   "exclude": ["src/**/__tests__/*", "node_modules"],
   "compilerOptions": {
     "composite": true,
@@ -9,7 +10,11 @@
       "@": ["src"],
       "@/*": ["src/*"]
     },
-    "types": ["vite/client", "element-plus/global"],
-    "moduleResolution": "Node"
+    "types": ["vite/client", "unplugin-icons/types/vue"],
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsxImportSource": "vue"
   }
 }

@@ -12,6 +12,11 @@ const router = createRouter({
           path: '/admin',
           name: 'AdminUser',
           component: () => import('@/views/user/AdminUserManage.vue')
+        },
+        {
+          path: '/menu',
+          name: 'Menu',
+          component: () => import('@/views/menu/MenuManage.vue')
         }
       ]
     },

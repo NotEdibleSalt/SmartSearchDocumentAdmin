@@ -97,4 +97,3 @@ const onSwitchLanguage = (language: string) => {
   }
 }
 </style>
-@/utils/lang @/utils/storage

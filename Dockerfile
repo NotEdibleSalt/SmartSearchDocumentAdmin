@@ -8,6 +8,7 @@ FROM nginx:alpine
 RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone
 WORKDIR /web
+# 替换nginx配置文件
 COPY  --from=builder /web/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY  --from=builder /web/dist /web
 EXPOSE 80

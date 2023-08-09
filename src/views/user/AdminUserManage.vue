@@ -1,32 +1,59 @@
 <template>
   <div>
-    <el-pagination
-      v-model:current-page="currentPage4"
-      v-model:page-size="pageSize4"
-      :page-sizes="[100, 200, 300, 400]"
-      :small="small"
-      :disabled="disabled"
-      :background="background"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="400"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+    <page :total="100">
+      <template v-slot:query>
+        <el-form ref="queryFormRef" :model="queryParams" :inline="true">
+          <el-form-item prop="keywords" label="关键字">
+            <el-input
+              v-model="queryParams.keywords"
+              placeholder="角色名称"
+              clearable
+              @keyup.enter="handleQuery"
+            />
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary" @click="handleQuery"><i-ep-search />搜索</el-button>
+            <el-button @click="resetQuery"><i-ep-refresh />重置</el-button>
+          </el-form-item>
+        </el-form>
+      </template>
+      <template v-slot:table>
+        <mtable></mtable>
+      </template>
+    </page>
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ElForm } from 'element-plus'
+import { ref, reactive } from 'vue'
 
-const currentPage4 = ref(4)
-const pageSize4 = ref(100)
-const small = ref(false)
-const background = ref(false)
-const disabled = ref(false)
+defineOptions({
+  name: 'Role',
+  inheritAttrs: false
+})
 
-const handleSizeChange = (val: number) => {
-  console.log(`${val} items per page`)
+const queryFormRef = ref(ElForm)
+const loading = ref(false)
+
+const queryParams = reactive({
+  pageNum: 1,
+  pageSize: 10,
+  keywords: ''
+})
+
+/**
+ * 查询
+ */
+function handleQuery() {
+  loading.value = true
 }
-const handleCurrentChange = (val: number) => {
-  console.log(`current page: ${val}`)
+/**
+ * 重置查询
+ */
+function resetQuery() {
+  queryFormRef.value.resetFields()
+  queryParams.pageNum = 1
+  handleQuery()
 }
 </script>

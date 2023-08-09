@@ -11,14 +11,18 @@ import { computed } from 'vue'
 const routers = computed(() => {
   return [
     {
-      key: 'asdf',
-      title: 'aasda',
-      routePath: '/aa',
+      key: 'setting',
+      title: '系统设置',
       children: [
         {
-          key: '123',
-          title: '系统管理',
-          routePath: '/aa'
+          key: 'userManage',
+          title: '用户管理',
+          routePath: '/admin'
+        },
+        {
+          key: 'menuManage',
+          title: '菜单管理',
+          routePath: '/menu'
         }
       ]
     },

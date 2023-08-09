@@ -34,15 +34,14 @@ const routeInfo = computed(() => props.menuInfo).value
 <style lang="scss" scope>
 .sider-item {
   border-bottom: solid 2px #f2f3f5;
-  z-index: 100;
 }
-.sider-item:hover {
-  border-left: solid 10px #ce4170;
-  background-color: aquamarine;
-  z-index: 100;
+
+.el-menu-item.is-active {
+  background-color: rgba(49, 195, 240, 0.966);
+  color: #000;
 }
-.sider-item:active {
-  border-left: solid 10px #ce4170;
-  z-index: 100;
+
+.el-menu-item:hover {
+  border-right: solid 5px #f1176b;
 }
 </style>
