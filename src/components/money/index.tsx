@@ -5,11 +5,12 @@ export default defineComponent({
   name: 'money',
   props: {
     money: {
-      type: [Number],
+      type: String,
       default: undefined
     }
   },
   setup(props) {
+    const moneyNum = props.money ? Number(props.money) : undefined
     return () => (
       <el-popover
         effect="light"
@@ -20,8 +21,9 @@ export default defineComponent({
           default: () => {
             return (
               <div>
-                <div>金额: {props.money} 元</div>
-                <div>大写: {toChineseMoney(props.money)}</div>
+                <div>金额: {moneyNum} 元</div>
+                <div></div>
+                <div>大写: {toChineseMoney(moneyNum)}</div>
               </div>
             )
           },

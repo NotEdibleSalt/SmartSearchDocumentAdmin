@@ -7,7 +7,7 @@ import {
 } from '@/types/dtable'
 import useModule from './module/module'
 import '@/styles/dtable.scss'
-import { formatDate, formatMoney, toChineseMoney } from '@/utils/format'
+import { formatDate, formatMoney } from '@/utils/format'
 import Money from '../money'
 
 export default defineComponent({

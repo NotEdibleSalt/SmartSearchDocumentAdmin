@@ -27,5 +27,15 @@ export default {
     personalData: 'Personal Data',
     changePassword: 'Change Password',
     logout: 'Logout'
+  },
+  operation: {
+    add: 'add',
+    del: 'delete',
+    edit: 'edit',
+    update: 'update',
+    pass: 'pass',
+    reject: 'reject',
+    search: 'search',
+    reset: 'reset',
   }
 }

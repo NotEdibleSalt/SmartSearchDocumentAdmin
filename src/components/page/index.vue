@@ -96,7 +96,7 @@ function handleCurrentChange(val: number) {
 }
 
 .search-container {
-  padding: 18px 0 0 10px;
+  padding: 20px 0 0 20px;
   margin-bottom: 10px;
   background-color: var(--el-bg-color-overlay);
   border: 1px solid var(--el-border-color-light);

@@ -27,5 +27,15 @@ export default {
     personalData: '个人信息',
     changePassword: '修改密码',
     logout: '退出登录'
+  },
+  operation: {
+    add: '新增',
+    del: '删除',
+    edit: '编辑',
+    update: '更新',
+    pass: '通过',
+    reject: '拒绝',
+    search: '搜索',
+    reset: '重置',
   }
 }
