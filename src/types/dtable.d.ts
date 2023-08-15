@@ -22,11 +22,12 @@ export interface TableColumn extends BasicColumn {
   mode?: string;
   selects?: Select[],
   type?: string;  // date money
+  formatter?: Function;
 }
 
 /** 表格顶部自定义函数类型 */
 interface render {
-  (row: TableData): string
+  (row: TableData): VNode
 }
 
 /** 表格操作栏类型 */

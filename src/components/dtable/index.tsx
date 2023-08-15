@@ -7,7 +7,8 @@ import {
 } from '@/types/dtable'
 import useModule from './module/module'
 import '@/styles/dtable.scss'
-import { formatDate, formatMoney } from '@/utils/format'
+import { formatDate, formatMoney, toChineseMoney } from '@/utils/format'
+import Money from '../money'
 
 export default defineComponent({
   name: 'dtable',
@@ -158,23 +159,17 @@ export default defineComponent({
           )}
           {props.columns.map((item: TableColumn) => {
             if (!item.formatter) {
-              if (item.type === 'date') {
-                item.formatter = (
-                  row: TableData,
-                  column: TableColumn,
-                  cellValue: string,
-                  index: number
-                ) => {
-                  console.log(row)
-                  console.log(column)
-                  debugger
-                }
+              if (item.type === 'dateTime') {
+                item.formatter = (row: TableData, column: TableColumn, cellValue: string) =>
+                  formatDate(cellValue)
+              } else if (item.type === 'date') {
+                item.formatter = (row: TableData, column: TableColumn, cellValue: string) =>
+                  formatDate(cellValue, 'YYYY-MM-DD')
               } else if (item.type === 'money') {
                 item.formatter = (
                   row: TableData,
                   column: TableColumn,
-                  cellValue: number | bigint,
-                  index: number
+                  cellValue: number | bigint
                 ) => formatMoney(cellValue)
               }
             }
@@ -192,28 +187,11 @@ export default defineComponent({
                 v-slots={{
                   default: (scope: { row: TableData }) => {
                     if (item.render) {
-                      return (
-                        <div
-                          style="cursor: pointer"
-                          onClick={() =>
-                            item.methods && methods.handleClickon(item.methods, scope.row)
-                          }
-                          domPropsInnerHTML={item.render(scope.row)}
-                        ></div>
-                      )
+                      return item.render(scope.row)
                     } else {
-                      return (
-                        <div
-                          class="text-no-wrap"
-                          onClick={() =>
-                            item.methods && methods.handleClickon(item.methods, scope.row)
-                          }
-                        >
-                          {Object.prototype.toString.call(item.prop) === '[object Array]'
-                            ? methods.propFilter(item.prop, scope.row)
-                            : scope.row[item.prop] ?? '--'}
-                        </div>
-                      )
+                      if (item.type === 'money') {
+                        return <Money money={scope.row[item.prop]}></Money>
+                      }
                     }
                   }
                 }}

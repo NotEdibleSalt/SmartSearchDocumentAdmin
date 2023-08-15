@@ -24,11 +24,11 @@
     </page>
   </div>
 </template>
-<script setup lang="ts">
+<script setup lang="tsx">
 import { ElForm } from 'element-plus'
 import { ref, reactive } from 'vue'
 import dtable from '@/components/dtable/index'
-import type { OptionColumn, TableColumn, TableData } from '@/types/dtable'
+import type { OptionColumn, TableColumn } from '@/types/dtable'
 
 defineOptions({
   name: 'Role',
@@ -53,6 +53,11 @@ const columns: TableColumn[] = [
     label: '金额',
     prop: 'amt',
     type: 'money'
+  },
+  {
+    label: '状态',
+    prop: 'status',
+    type: 'status'
   }
 ]
 
@@ -74,12 +79,14 @@ const datas = [
   {
     name: '张三',
     date: '2020-04-02T08:02:17-05:00',
-    amt: '200000000007'
+    amt: '207',
+    status: '1'
   },
   {
     name: '李四',
     date: '2023-05-02T08:02:17-05:00',
-    amt: '200000000007'
+    amt: '560001',
+    status: '2'
   }
 ]
 
