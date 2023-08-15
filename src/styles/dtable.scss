@@ -1,0 +1,116 @@
+:global {
+  .d-table {
+    .el-table__header,
+    .el-table__body {
+      margin: 0;
+    }
+    .el-table::before {
+      height: 0;
+    }
+    .el-button {
+      padding: 0;
+      border: none;
+      margin: 0 4px;
+      padding: 0 4px 0 8px;
+      border-left: 1px solid #e2e2e2;
+      font-size: 14px;
+      min-height: 14px;
+      &:first-child {
+        border-left: none;
+      }
+    }
+    .el-button+.el-button {
+      margin-left: 0;
+    }
+    .btn-right div {
+      margin-right: 5px;
+    }
+    .btn-right div:empty {
+      margin-right: 0px;
+    }
+    //斑马纹表格背景色
+    .el-table .even-row {
+      --el-table-tr-background-color: #f5fafb;
+    }
+    .el-table .odd-row {
+      --el-table-tr-background-color: #ffffff;
+    }
+    .el-table--border::after,
+    .el-table--group::after {
+      width: 0;
+    }
+    .el-table__fixed-right::before,
+    .el-table__fixed::before {
+      background-color: transparent;
+    }
+    .d-table-header {
+      th {
+        background-color: #fff4d9 !important;
+      }
+    }
+    .progress-line {
+      .el-progress-bar__outer {
+        height: 16px !important;
+      }
+      .el-progress-bar__outer,
+      .el-progress-bar__inner {
+        border-radius: 0 !important;
+      }
+    }
+    .text-no-wrap {
+      cursor: pointer;
+      display: inline;
+    }
+    .el-table {
+      td.el-table__cell div,
+      th.el-table__cell>.cell {
+        font-size: 14px;
+      }
+      th.el-table__cell>.cell {
+        font-weight: normal;
+      }
+      .cell {
+        padding: 0 10px;
+        line-height: 39px;
+      }
+      .el-table__header-wrapper .checkBoxRadio .el-checkbox {
+        display: none;
+      }
+      .el-checkbox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .table-img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        padding: 6px 0;
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+        justify-content: center;
+      }
+    }
+    .el-table--small .el-table__cell {
+      padding: 0;
+    }
+    .el-dropdown-menu__item {
+      padding: 5px 10px !important;
+      .el-button {
+        width: 100%;
+        text-align: center;
+        padding: 0 8px;
+        margin: 0;
+      }
+    }
+    .flex-box {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      .item {
+        margin: 0 10px;
+      }
+    }
+  }
+}

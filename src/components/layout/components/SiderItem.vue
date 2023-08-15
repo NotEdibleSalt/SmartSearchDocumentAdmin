@@ -1,7 +1,7 @@
 <template>
   <div class="sider-item">
     <template v-if="routeInfo && routeInfo.children">
-      <el-sub-menu :index="routeInfo.routePath">
+      <el-sub-menu :index="routeInfo.routePath ? routeInfo.routePath : routeInfo.key">
         <template #title>
           {{ routeInfo.title }}
         </template>

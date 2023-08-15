@@ -28,7 +28,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { PropType } from 'vue'
+import { type PropType } from 'vue'
 import { useVModel } from '@vueuse/core'
 import { scrollTo } from '../../utils/scroll-to'
 
@@ -44,7 +44,7 @@ const props = defineProps({
   },
   limit: {
     type: Number,
-    default: 20
+    default: 10
   },
   pageSizes: {
     type: Array as PropType<number[]>,

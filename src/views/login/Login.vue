@@ -39,7 +39,6 @@ import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus/es/components/form'
 import { loginApi } from '@/api/account'
 import { setLocalStorage } from '@/utils/storage'
-import router from '@/router'
 
 const formRef = ref<FormInstance>()
 const formState = reactive({
