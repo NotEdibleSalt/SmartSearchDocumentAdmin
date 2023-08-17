@@ -33,9 +33,19 @@ export default {
     del: 'delete',
     edit: 'edit',
     update: 'update',
+    save: 'save',
+    cancel: 'cancel',
     pass: 'pass',
     reject: 'reject',
     search: 'search',
     reset: 'reset',
+    batchDel: 'Batch Delete',
+    moreOperation: 'More Operation',
+    expandOneLevel: 'Expand One Level',
+    expandAll: 'Expand All',
+    callapseAll: 'Callapse All',
+  },
+  meun: {
+    addTopMenu: 'Add Top Menu',
   }
 }

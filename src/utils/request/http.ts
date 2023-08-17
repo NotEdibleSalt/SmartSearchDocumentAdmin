@@ -12,6 +12,12 @@ export const get = (url: string, params?: object) => {
   })
 }
 
+export const restGet = (url: string, id: string, params?: object) => {
+
+  url = url + "/" + id
+  return get(url, params)
+}
+
 export const post = (url: string, data?: object, headersType?: string) => {
   return axiosInstance({
     url: url,
@@ -21,6 +27,12 @@ export const post = (url: string, data?: object, headersType?: string) => {
       'Content-Type': headersType || ContentTypeEnum.JSON
     }
   })
+}
+
+export const restPost = (url: string, id: string, data?: object, headersType?: string) => {
+
+  url = url + "/" + id
+  return post(url, data, headersType)
 }
 
 export const patch = (url: string, data?: object, headersType?: string) => {
@@ -34,6 +46,12 @@ export const patch = (url: string, data?: object, headersType?: string) => {
   })
 }
 
+export const restPatch = (url: string, id: string, data?: object, headersType?: string) => {
+
+  url = url + "/" + id
+  return patch(url, data, headersType)
+}
+
 export const put = (url: string, data?: object, headersType?: ContentTypeEnum) => {
   return axiosInstance({
     url: url,
@@ -45,12 +63,24 @@ export const put = (url: string, data?: object, headersType?: ContentTypeEnum) =
   })
 }
 
+export const restPut = (url: string, id: string, data?: object, headersType?: ContentTypeEnum) => {
+
+  url = url + "/" + id
+  return put(url, data, headersType)
+}
+
 export const del = (url: string, params?: object) => {
   return axiosInstance({
     url: url,
     method: RequestHttpEnum.DELETE,
     params
   })
+}
+
+export const restDel = (url: string, id: string, params?: object) => {
+
+  url = url + "/" + id
+  return del(url, params)
 }
 
 // 获取请求函数，默认get

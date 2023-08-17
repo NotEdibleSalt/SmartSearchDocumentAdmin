@@ -33,9 +33,19 @@ export default {
     del: '删除',
     edit: '编辑',
     update: '更新',
+    save: '保存',
+    cancel: '取消',
     pass: '通过',
     reject: '拒绝',
     search: '搜索',
     reset: '重置',
+    batchDel: '批量删除',
+    moreOperation: '更多操作',
+    expandOneLevel: '展开一级',
+    expandAll: '全部展开',
+    callapseAll: '全部收起',
+  },
+  menu: {
+    addTopMenu: '新增顶级菜单',
   }
 }

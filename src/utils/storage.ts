@@ -44,7 +44,7 @@ export const getLocalStorage = <T>(key: string): T | null => {
           return value as T
         }
       }
-      remove(key)
+      removeLocalStorage(key)
     }
   } catch (err) {
     return null;
