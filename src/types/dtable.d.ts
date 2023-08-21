@@ -46,4 +46,5 @@ export interface OptionButton {
   permission?: string | string[]; // 权限
   disabled?: boolean;
   size?: string;
+  popconfirm?: boolean;
 }

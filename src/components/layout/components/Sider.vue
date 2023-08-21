@@ -23,6 +23,11 @@ const routers = computed(() => {
           key: 'menuManage',
           title: '菜单管理',
           routePath: '/menu'
+        },
+        {
+          key: 'roleManage',
+          title: '角色管理',
+          routePath: '/role'
         }
       ]
     },

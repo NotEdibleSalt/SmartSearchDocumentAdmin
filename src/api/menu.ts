@@ -1,7 +1,7 @@
 
 import { get, post, restDel, restGet, restPut } from "@/utils/request";
 
-const baseUrl = "/menu"
+const baseUrl = "/menus"
 
 
 export const addMenuApi = (data: any): Promise<any> => {

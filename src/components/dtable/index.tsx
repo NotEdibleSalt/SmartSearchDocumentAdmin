@@ -105,14 +105,17 @@ export default defineComponent({
       default: false
     }
   },
-  setup(props, { emit, slots }) {
-    const DTable = ref(null)
-    const { methods } = useModule(props, emit, DTable)
+  setup(props, { emit, slots, expose }) {
+    const tableRef = ref(null)
+    const { methods } = useModule(props, emit, tableRef)
+    expose({
+      tableRef
+    })
     return () => (
       <div v-loading={props.loading}>
         <el-table
           class="d-table"
-          ref={DTable}
+          ref={tableRef}
           data={props.datas}
           border
           max-height={props.maxHeight}
@@ -210,17 +213,40 @@ export default defineComponent({
                     props.options.buttons && (
                       <div class="flex-box">
                         {props.options.buttons.map((button: OptionButton) => {
-                          return (
-                            <el-button
-                              size={button.size}
-                              type={button.type ?? 'default'}
-                              icon={button.icon}
-                              disabled={button.disabled}
-                              onClick={() => button.method(scope.row)}
-                            >
-                              {button.label}
-                            </el-button>
-                          )
+                          if (button.type === 'danger' && button.popconfirm) {
+                            return (
+                              <el-popconfirm
+                                title="确定删除这个条数据吗？"
+                                onConfirm={() => button.method(scope.row)}
+                                v-slots={{
+                                  reference: () => {
+                                    return (
+                                      <el-button
+                                        size={button.size}
+                                        type={button.type ?? 'default'}
+                                        icon={button.icon}
+                                        disabled={button.disabled}
+                                      >
+                                        {button.label}
+                                      </el-button>
+                                    )
+                                  }
+                                }}
+                              ></el-popconfirm>
+                            )
+                          } else {
+                            return (
+                              <el-button
+                                size={button.size}
+                                type={button.type ?? 'default'}
+                                icon={button.icon}
+                                disabled={button.disabled}
+                                onClick={() => button.method(scope.row)}
+                              >
+                                {button.label}
+                              </el-button>
+                            )
+                          }
                         })}
                       </div>
                     )
