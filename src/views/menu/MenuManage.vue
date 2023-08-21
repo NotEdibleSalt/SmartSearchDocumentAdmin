@@ -221,7 +221,6 @@ import type { TreeI } from '@/types/tree'
 import { Search } from '@element-plus/icons-vue'
 import { addMenuApi, updateMenuApi, getMenuApi, getMenuTreeApi, delMenuApi } from '@/api/menu'
 import { type ElTree, type FormInstance } from 'element-plus'
-import type { FilterValue, TreeNodeData } from 'element-plus/es/components/tree/src/tree.type'
 
 const labelPosition = ref('right')
 

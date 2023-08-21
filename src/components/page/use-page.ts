@@ -1,0 +1,22 @@
+import { reactive } from 'vue'
+
+export default function () {
+
+  const pagObj = reactive({
+    total: 0,
+    pageNumber: 1,
+    pageSize: 10
+  })
+
+  let dialogObj = reactive({
+    dialogVisible: false,
+    dialogTitle: ''
+  })
+
+
+
+  return {
+    pagObj,
+    dialogObj
+  }
+}
