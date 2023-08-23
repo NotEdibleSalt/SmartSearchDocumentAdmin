@@ -34,16 +34,7 @@ const items: FormItemI[] = [
     type: 'select',
     required: true,
     selectConfig: {
-      options: [
-        {
-          label: '1',
-          value: '1'
-        },
-        {
-          label: '2',
-          value: '2'
-        }
-      ]
+      dict: 'AvailableStatus'
     }
   }
 ]

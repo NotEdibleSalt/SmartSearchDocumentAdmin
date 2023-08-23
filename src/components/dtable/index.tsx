@@ -8,6 +8,7 @@ import {
 import useModule from './module/module'
 import '@/styles/dtable.scss'
 import { formatDate, formatMoney } from '@/utils/format'
+import { dictData, dictDataLabel } from '@/plugins/DictPlugin'
 import Money from '../money'
 
 export default defineComponent({
@@ -105,7 +106,8 @@ export default defineComponent({
       default: false
     }
   },
-  setup(props, { emit, slots, expose }) {
+  setup(props, ctx) {
+    const { emit, expose } = ctx
     const tableRef = ref(null)
     const { methods } = useModule(props, emit, tableRef)
     expose({
@@ -177,6 +179,20 @@ export default defineComponent({
               }
             }
 
+            if (item.dict) {
+              item.formatter = (
+                row: TableData,
+                column: TableColumn,
+                cellValue: string | number | boolean
+              ) => {
+                if (item.dict) {
+                  console.log(dictDataLabel(item.dict, cellValue).value)
+
+                  return dictDataLabel(item.dict, cellValue).value
+                }
+              }
+            }
+
             return (
               <el-table-column
                 key={item.prop}
@@ -213,6 +229,84 @@ export default defineComponent({
                     props.options.buttons && (
                       <div class="flex-box">
                         {props.options.buttons.map((button: OptionButton) => {
+                          if (button.group) {
+                            return (
+                              <el-button
+                                size={button.size}
+                                type={button.type ?? 'default'}
+                                icon={button.icon}
+                                disabled={button.disabled}
+                                v-slots={{
+                                  default: (scope1: { row: any }) => {
+                                    return (
+                                      <el-dropdown
+                                        v-slots={{
+                                          dropdown: () => {
+                                            return (
+                                              <el-dropdown-menu>
+                                                {button.group?.map((item1) => {
+                                                  if (item1.type === 'danger' && item1.popconfirm) {
+                                                    return (
+                                                      <el-dropdown-item>
+                                                        <el-popconfirm
+                                                          title="确定删除这个条数据吗？"
+                                                          onConfirm={() => item1.method(scope.row)}
+                                                          v-slots={{
+                                                            reference: () => {
+                                                              return (
+                                                                <el-button
+                                                                  size={item1.size}
+                                                                  type={item1.type ?? 'default'}
+                                                                  icon={item1.icon}
+                                                                  disabled={item1.disabled}
+                                                                >
+                                                                  {item1.label}
+                                                                </el-button>
+                                                              )
+                                                            }
+                                                          }}
+                                                        ></el-popconfirm>
+                                                      </el-dropdown-item>
+                                                    )
+                                                  } else {
+                                                    return (
+                                                      <el-dropdown-item>
+                                                        <el-button
+                                                          size={item1.size}
+                                                          type={item1.type ?? 'default'}
+                                                          icon={item1.icon}
+                                                          disabled={item1.disabled}
+                                                          onClick={() => {
+                                                            if (item1.method) {
+                                                              return item1.method(scope.row)
+                                                            }
+                                                          }}
+                                                        >
+                                                          {item1.label}
+                                                        </el-button>
+                                                      </el-dropdown-item>
+                                                    )
+                                                  }
+                                                })}
+                                              </el-dropdown-menu>
+                                            )
+                                          }
+                                        }}
+                                      >
+                                        <span class="el-dropdown-link">
+                                          {button.label}
+                                          <el-icon class="el-icon--right">
+                                            <arrow-down />
+                                          </el-icon>
+                                        </span>
+                                      </el-dropdown>
+                                    )
+                                  }
+                                }}
+                              ></el-button>
+                            )
+                          }
+
                           if (button.type === 'danger' && button.popconfirm) {
                             return (
                               <el-popconfirm

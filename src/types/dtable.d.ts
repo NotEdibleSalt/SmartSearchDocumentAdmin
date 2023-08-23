@@ -23,6 +23,7 @@ export interface TableColumn extends BasicColumn {
   selects?: Select[],
   type?: string;  // date money
   formatter?: Function;
+  dict?: string
 }
 
 /** 表格顶部自定义函数类型 */
@@ -42,9 +43,10 @@ export interface OptionButton {
   label: string; // 标题
   icon?: string; // icon图标
   type?: ButtonType; // 类型
-  method: Function; // 执行方法
+  method?: Function; // 执行方法
   permission?: string | string[]; // 权限
   disabled?: boolean;
   size?: string;
   popconfirm?: boolean;
+  group?: OptionButton[]
 }

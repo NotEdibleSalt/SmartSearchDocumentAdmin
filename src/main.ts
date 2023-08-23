@@ -10,8 +10,10 @@ import 'element-plus/theme-chalk/dark/css-vars.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'default-passive-events'
 import i18n from './languages'
+import DictInstall from "./plugins/DictPlugin";
 
 const app = createApp(App)
+app.use(DictInstall)
 app.use(i18n)
 app.use(router)
 app.use(ElementPlus)

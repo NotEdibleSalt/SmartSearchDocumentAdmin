@@ -9,8 +9,12 @@ import dayjs from "dayjs";
  */
 export const formatDate = (time: string, format = 'YYYY-MM-DD HH:mm:ss') => {
 
+  if (!time) {
+    return time
+  }
   const date = dayjs(time)
   return date.format(format)
+
 }
 
 
@@ -22,6 +26,10 @@ export const formatDate = (time: string, format = 'YYYY-MM-DD HH:mm:ss') => {
  * @returns 
  */
 export const formatMoney = (money: number | bigint, decimals = 2) => {
+
+  if (!money) {
+    return money
+  }
 
   return new Intl.NumberFormat("zh-CN", {
     // style: "currency", // 货币形式

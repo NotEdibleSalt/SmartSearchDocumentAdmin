@@ -1,6 +1,7 @@
 import { defineComponent, ref, type PropType } from 'vue'
 import type { FormItemI } from '@/types/dform'
 import type { FormInstance } from 'element-plus'
+import { dictData } from '@/plugins/DictPlugin'
 
 export default defineComponent({
   name: 'dform',
@@ -47,6 +48,31 @@ export default defineComponent({
           ref={formRef}
         >
           {props.items.map((item) => {
+            if (item.type === 'select' && item.selectConfig?.dict) {
+              if (!item.selectConfig.options) {
+                item.selectConfig.options = []
+              }
+              item.selectConfig.options = item.selectConfig.options.concat(
+                dictData(item.selectConfig?.dict).value ?? []
+              )
+            }
+            if (item.type === 'checkbox' && item.checkboxConfig?.dict) {
+              if (!item.checkboxConfig.options) {
+                item.checkboxConfig.options = []
+              }
+              item.checkboxConfig.options = item.checkboxConfig.options.concat(
+                dictData(item.checkboxConfig?.dict).value ?? []
+              )
+            }
+            if (item.type === 'radio' && item.radioConfig?.dict) {
+              if (!item.radioConfig.options) {
+                item.radioConfig.options = []
+              }
+              item.radioConfig.options = item.radioConfig.options.concat(
+                dictData(item.radioConfig?.dict).value ?? []
+              )
+            }
+
             return (
               <el-form-item
                 v-show={!item.hidden}

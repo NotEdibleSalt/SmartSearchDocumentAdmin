@@ -56,7 +56,8 @@ const columns: TableColumn[] = [
   {
     label: '状态',
     prop: 'status',
-    type: 'status'
+    type: 'status',
+    dict: 'AvailableStatus'
   }
 ]
 

@@ -28,6 +28,11 @@ const routers = computed(() => {
           key: 'roleManage',
           title: '角色管理',
           routePath: '/role'
+        },
+        {
+          key: 'dictManage',
+          title: '字典管理',
+          routePath: '/dict'
         }
       ]
     },

@@ -22,6 +22,11 @@ const router = createRouter({
           path: '/role',
           name: 'Role',
           component: () => import('@/views/role/RoleManage.vue')
+        },
+        {
+          path: '/dict',
+          name: 'Dict',
+          component: () => import('@/views/dict/DictManage.vue')
         }
       ]
     },

@@ -8,21 +8,11 @@
     >
       <template v-slot:query>
         <el-form :model="queryParams" :inline="true">
-          <el-form-item prop="keywords" label="关键字">
-            <el-input
-              v-model="queryParams.name"
-              placeholder="角色名称"
-              clearable
-              @keyup.enter="handleQuery"
-            />
+          <el-form-item prop="name" label="字典名称">
+            <el-input v-model="queryParams.name" clearable @keyup.enter="handleQuery" />
           </el-form-item>
-          <el-form-item prop="keywords" label="关键字">
-            <el-input
-              v-model="queryParams.status"
-              placeholder="状态"
-              clearable
-              @keyup.enter="handleQuery"
-            />
+          <el-form-item prop="type" label="字典类型">
+            <el-input v-model="queryParams.status" clearable @keyup.enter="handleQuery" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleQuery">{{ $t('operation.search') }}</el-button>
@@ -35,8 +25,8 @@
           @click="
             () => {
               dialogObj.dialogVisible = true
-              dialogObj.dialogTitle = '新增角色'
-              roleId = ''
+              dialogObj.dialogTitle = '新增字典'
+              dictId = ''
             }
           "
           >{{ $t('operation.add') }}</el-button
@@ -54,21 +44,20 @@
       width="33%"
       destroy-on-close
       center
-      @open="openRoleView"
+      @open="openDictView"
     >
       <div>
-        <Role ref="roleRef"></Role>
+        <Dict ref="dictRef"></Dict>
       </div>
       <template #footer>
         <span class="dialog-footer">
-          <el-button type="primary" @click="saveRole">
+          <el-button type="primary" @click="saveDict">
             {{ $t('operation.add') }}
           </el-button>
           <el-button
             @click="
               () => {
                 dialogObj.dialogVisible = false
-                dialogObj.dialogTitle = '新增角色'
               }
             "
             >{{ $t('operation.cancel') }}</el-button
@@ -77,18 +66,30 @@
       </template>
     </el-dialog>
   </div>
+
+  <div>
+    <el-drawer
+      v-model="itemDrawerVisible"
+      :destroy-on-close="true"
+      title="字典项"
+      direction="rtl"
+      size="50%"
+    >
+      <DictItemManage :dictId="dictId" />
+    </el-drawer>
+  </div>
 </template>
 <script setup lang="tsx">
 import { ElForm } from 'element-plus'
 import { ref, reactive, onMounted } from 'vue'
 import dtable from '@/components/dtable/index'
 import type { OptionColumn, TableColumn } from '@/types/dtable'
-import Role from './Role.vue'
-import { delRoleApi, getRolesApi } from '@/api/role'
+import Dict from './Dict.vue'
+import { delDictApi, dictPagingApi } from '@/api/dict'
 import usePage from '@/components/page/use-page'
+import DictItemManage from './item/DictItemManage.vue'
 
 const { pagObj, dialogObj } = usePage()
-
 onMounted(() => {
   handleQuery()
 })
@@ -104,7 +105,7 @@ const queryParams = reactive({
 function handleQuery() {
   loading.value = true
 
-  getRolesApi({ ...queryParams, ...pagObj }).then((res) => {
+  dictPagingApi({ ...queryParams, ...pagObj }).then((res) => {
     loading.value = false
     tableDatas.value = res.content
     pagObj.total = res.totalElements
@@ -113,47 +114,64 @@ function handleQuery() {
 
 const columns: TableColumn[] = [
   {
-    label: '角色名称',
+    label: '名称',
     prop: 'name'
   },
   {
-    label: '角色描述',
-    prop: 'description'
+    label: '类型',
+    prop: 'type'
   },
   {
-    label: '创建时间',
-    prop: 'createTime',
-    type: 'date'
+    label: '备注',
+    prop: 'remark'
+  },
+  {
+    label: '系统内置',
+    prop: 'system',
+    dict: 'YesOrNo'
   },
   {
     label: '状态',
     prop: 'status',
-    type: 'status',
     dict: 'AvailableStatus'
   }
 ]
 
 const options: OptionColumn = {
   label: '操作',
+  width: '280px',
   buttons: [
     {
       label: '编辑',
       type: 'primary',
       method: (row: any) => {
         dialogObj.dialogVisible = true
-        dialogObj.dialogTitle = '编辑角色'
-        roleId = row.id
+        dialogObj.dialogTitle = '编辑字典'
+        dictId.value = row.id
       }
     },
     {
-      label: '删除',
-      type: 'danger',
-      popconfirm: true,
+      label: '字典项',
+      type: 'warning',
       method: (row: any) => {
-        delRoleApi(row.id).then(() => {
-          handleQuery()
-        })
+        itemDrawerVisible.value = true
+        dictId.value = row.id
       }
+    },
+    {
+      label: '其他',
+      group: [
+        {
+          label: '删除',
+          type: 'danger',
+          popconfirm: true,
+          method: (row: any) => {
+            delDictApi(row.id).then(() => {
+              handleQuery()
+            })
+          }
+        }
+      ]
     }
   ]
 }
@@ -166,16 +184,18 @@ const pagination = (page: { page: number; limit: number }) => {
   handleQuery()
 }
 
-const roleRef = ref()
-const saveRole = () => {
-  roleRef.value.submit().then(() => {
+const dictRef = ref()
+const saveDict = () => {
+  dictRef.value.submit().then(() => {
     dialogObj.dialogVisible = false
-    roleId.value = ''
+    dictId.value = ''
   })
 }
 
-let roleId = ref('')
-const openRoleView = () => {
-  roleRef.value.initForm(roleId.value)
+let dictId = ref('')
+const openDictView = () => {
+  dictRef.value.initForm(dictId.value)
 }
+
+const itemDrawerVisible = ref(false)
 </script>

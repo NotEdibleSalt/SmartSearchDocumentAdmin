@@ -16,7 +16,8 @@ export interface FormItemI {
 
 export interface SelectConfigI {
 
-  options: SelectOptionI[]
+  dict?: string,
+  options?: SelectOptionI[]
   multiple?: boolean
   clearable?: boolean
   collapseTags?: boolean
@@ -63,6 +64,7 @@ export interface DateConfigI {
 
 export interface CheckboxConfigI {
 
+  dict?: string,
   min?: number
   max?: number
   disabled?: boolean
@@ -70,11 +72,12 @@ export interface CheckboxConfigI {
   textColor?: string
   fill?: string
   tag?: string
-  options: SelectOptionI[]
+  options?: SelectOptionI[]
 }
 
 export interface RadioConfigI {
 
+  dict?: string,
   border?: boolean
   textColor?: string
   options: SelectOptionI[]
