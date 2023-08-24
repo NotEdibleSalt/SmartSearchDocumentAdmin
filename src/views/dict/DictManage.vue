@@ -159,19 +159,14 @@ const options: OptionColumn = {
       }
     },
     {
-      label: '其他',
-      group: [
-        {
-          label: '删除',
-          type: 'danger',
-          popconfirm: true,
-          method: (row: any) => {
-            delDictApi(row.id).then(() => {
-              handleQuery()
-            })
-          }
-        }
-      ]
+      label: '删除',
+      type: 'danger',
+      popconfirm: true,
+      method: (row: any) => {
+        delDictApi(row.id).then(() => {
+          handleQuery()
+        })
+      }
     }
   ]
 }

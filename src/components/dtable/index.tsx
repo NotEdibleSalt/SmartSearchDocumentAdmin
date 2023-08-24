@@ -8,7 +8,7 @@ import {
 import useModule from './module/module'
 import '@/styles/dtable.scss'
 import { formatDate, formatMoney } from '@/utils/format'
-import { dictData, dictDataLabel } from '@/plugins/DictPlugin'
+import { dictDataLabel } from '@/plugins/DictPlugin'
 import Money from '../money'
 
 export default defineComponent({
@@ -107,7 +107,7 @@ export default defineComponent({
     }
   },
   setup(props, ctx) {
-    const { emit, expose } = ctx
+    const { emit, expose, slots } = ctx
     const tableRef = ref(null)
     const { methods } = useModule(props, emit, tableRef)
     expose({
@@ -186,8 +186,6 @@ export default defineComponent({
                 cellValue: string | number | boolean
               ) => {
                 if (item.dict) {
-                  console.log(dictDataLabel(item.dict, cellValue).value)
-
                   return dictDataLabel(item.dict, cellValue).value
                 }
               }
@@ -237,9 +235,14 @@ export default defineComponent({
                                 icon={button.icon}
                                 disabled={button.disabled}
                                 v-slots={{
-                                  default: (scope1: { row: any }) => {
+                                  default: () => {
+                                    const popRef = ref()
                                     return (
                                       <el-dropdown
+                                        trigger="click"
+                                        hide-on-click={false}
+                                        ref={popRef}
+                                        id={scope.row.id}
                                         v-slots={{
                                           dropdown: () => {
                                             return (
@@ -250,7 +253,15 @@ export default defineComponent({
                                                       <el-dropdown-item>
                                                         <el-popconfirm
                                                           title="确定删除这个条数据吗？"
-                                                          onConfirm={() => item1.method(scope.row)}
+                                                          onConfirm={() => {
+                                                            if (item1.method) {
+                                                              item1.method(scope.row)
+                                                            }
+                                                            popRef.value.handleClose()
+                                                          }}
+                                                          onCancel={() => {
+                                                            popRef.value.handleClose()
+                                                          }}
                                                           v-slots={{
                                                             reference: () => {
                                                               return (

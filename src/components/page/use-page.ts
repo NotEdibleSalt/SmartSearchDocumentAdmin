@@ -4,8 +4,8 @@ export default function () {
 
   const pagObj = reactive({
     total: 0,
-    pageNumber: 1,
-    pageSize: 10
+    page: 0,
+    size: 10
   })
 
   let dialogObj = reactive({
