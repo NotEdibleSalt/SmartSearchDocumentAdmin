@@ -57,7 +57,7 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button type="primary" @click="saveRole">
-            {{ $t('operation.add') }}
+            {{ $t('operation.save') }}
           </el-button>
           <el-button
             @click="
@@ -137,7 +137,7 @@ const options: OptionColumn = {
       method: (row: any) => {
         dialogObj.dialogVisible = true
         dialogObj.dialogTitle = '编辑角色'
-        roleId = row.id
+        roleId.value = row.id
       }
     },
     {

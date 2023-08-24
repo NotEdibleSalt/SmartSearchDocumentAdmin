@@ -7,9 +7,10 @@
 import { ref, reactive } from 'vue'
 import dform from '@/components/dform/index'
 import type { FormItemI } from '@/types/dform'
-import { addRoleApi, getRoleApi } from '@/api/role'
+import { addRoleApi, getRoleApi, updateRoleApi } from '@/api/role'
 
 let formData = reactive({
+  id: '',
   name: '',
   description: '',
   status: ''
@@ -41,8 +42,12 @@ const items: FormItemI[] = [
 
 const formRef = ref()
 const submit = async () => {
-  await addRoleApi(formData)
-  formRef.value.resetFields()
+  if (formData.id) {
+    await updateRoleApi(formData.id, formData)
+  } else {
+    await addRoleApi(formData)
+  }
+  formRef.value.formRef.resetFields()
 }
 
 const initForm = (roleId: string) => {

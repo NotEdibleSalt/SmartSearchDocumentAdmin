@@ -7,10 +7,11 @@
 import { reactive, ref } from 'vue'
 import dform from '@/components/dform/index'
 import type { FormItemI } from '@/types/dform'
-import { addDictApi, getDictApi } from '@/api/dict'
+import { addDictApi, getDictApi, updateDictApi } from '@/api/dict'
 import { AvailableStatus } from '@/enums/StatusEnum'
 
 let formData = reactive({
+  id: '',
   name: '',
   type: '',
   remark: '',
@@ -65,8 +66,12 @@ const items: FormItemI[] = [
 
 const formRef = ref()
 const submit = async () => {
-  await addDictApi(formData)
-  formRef.value.resetFields()
+  if (formData.id) {
+    await updateDictApi(formData.id, formData)
+  } else {
+    await addDictApi(formData)
+  }
+  formRef.value.formRef.resetFields()
 }
 
 const initForm = (dictId: string) => {
