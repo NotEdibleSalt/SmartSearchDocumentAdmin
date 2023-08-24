@@ -1,11 +1,6 @@
 <template>
   <div>
-    <page
-      :total="pagObj.total"
-      :page="pagObj.pageNumber"
-      :limit="pagObj.pageSize"
-      @pagination="pagination"
-    >
+    <page :total="pagObj.total" :page="pagObj.page" :limit="pagObj.size" @pagination="pagination">
       <template v-slot:query>
         <el-form :model="queryParams" :inline="true">
           <el-form-item prop="keywords" label="关键字">
@@ -160,9 +155,9 @@ const options: OptionColumn = {
 
 let tableDatas = ref([])
 const loading = ref(false)
-const pagination = (page: { page: number; limit: number }) => {
-  pagObj.pageNumber = page.page
-  pagObj.pageSize = page.limit
+const pagination = (page: { page: number; size: number }) => {
+  pagObj.page = page.page
+  pagObj.size = page.size
   handleQuery()
 }
 

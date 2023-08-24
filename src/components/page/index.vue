@@ -42,7 +42,7 @@ const props = defineProps({
     type: Number,
     default: 1
   },
-  limit: {
+  size: {
     type: Number,
     default: 10
   },
@@ -70,13 +70,13 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['pagination', 'update:page', 'update:limit'])
+const emit = defineEmits(['pagination', 'update:page', 'update:size'])
 
 const currentPage = useVModel(props, 'page', emit)
-const pageSize = useVModel(props, 'limit', emit)
+const pageSize = useVModel(props, 'size', emit)
 
 function handleSizeChange(val: number) {
-  emit('pagination', { page: currentPage, limit: val })
+  emit('pagination', { page: currentPage, size: val })
   if (props.autoScroll) {
     scrollTo(0, 800)
   }
@@ -84,7 +84,7 @@ function handleSizeChange(val: number) {
 
 function handleCurrentChange(val: number) {
   currentPage.value = val
-  emit('pagination', { page: val, limit: props.limit })
+  emit('pagination', { page: val, size: props.size })
   if (props.autoScroll) {
     scrollTo(0, 800)
   }

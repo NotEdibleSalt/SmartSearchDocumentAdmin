@@ -34,7 +34,7 @@ defineOptions({
   inheritAttrs: false
 })
 
-const pagination = (page: { page: number; limit: number }) => {
+const pagination = (page: { page: number; size: number }) => {
   console.log(page)
 }
 
