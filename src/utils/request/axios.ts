@@ -2,7 +2,6 @@ import axios, { type AxiosResponse, type InternalAxiosRequestConfig, AxiosError 
 import { getLocalStorage } from '../storage';
 import { ElMessage } from 'element-plus';
 import { ElMessageBox } from 'element-plus';
-import { sm3Util } from '../sm';
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,

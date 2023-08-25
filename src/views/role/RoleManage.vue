@@ -72,15 +72,55 @@
       </template>
     </el-dialog>
   </div>
+  <div>
+    <el-dialog
+      v-model="menuTreeDialogVisible"
+      title="关联菜单"
+      width="40%"
+      destroy-on-close
+      center
+      @open="getMenuTree"
+    >
+      <div>
+        <el-tree
+          :data="menuTreeDataSource"
+          show-checkbox
+          ref="treeRef"
+          node-key="id"
+          default-expand-all
+          highlight-current
+        >
+        </el-tree>
+      </div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button type="primary" @click="saveRoleMeuns">
+            {{ $t('operation.save') }}
+          </el-button>
+          <el-button
+            @click="
+              () => {
+                menuTreeDialogVisible = false
+              }
+            "
+            >{{ $t('operation.cancel') }}</el-button
+          >
+        </span>
+      </template>
+    </el-dialog>
+  </div>
 </template>
 <script setup lang="tsx">
-import { ElForm } from 'element-plus'
+import { ElForm, ElTree } from 'element-plus'
 import { ref, reactive, onMounted } from 'vue'
 import dtable from '@/components/dtable/index'
 import type { OptionColumn, TableColumn } from '@/types/dtable'
 import Role from './Role.vue'
 import { delRoleApi, getRolesApi } from '@/api/role'
 import usePage from '@/components/page/use-page'
+import { getMenuTreeApi } from '@/api/menu'
+import type { TreeI } from '@/types/tree'
+import { addRoleMenuApi, getRoleMenuApi, roleMenuPagingApi } from '@/api/roleMenu'
 
 const { pagObj, dialogObj } = usePage()
 
@@ -125,6 +165,22 @@ const columns: TableColumn[] = [
     prop: 'status',
     type: 'status',
     dict: 'AvailableStatus'
+  },
+  {
+    label: '关联菜单',
+    prop: 'asa',
+    render: (rowData) => {
+      return (
+        <el-button
+          type="warning"
+          onClick={() => {
+            getRoleMenu(rowData.id)
+          }}
+        >
+          关联菜单
+        </el-button>
+      )
+    }
   }
 ]
 
@@ -172,5 +228,28 @@ const saveRole = () => {
 let roleId = ref('')
 const openRoleView = () => {
   roleRef.value.initForm(roleId.value)
+}
+
+const treeRef = ref<InstanceType<typeof ElTree>>()
+let menuTreeDialogVisible = ref(false)
+let menuTreeDataSource = ref<TreeI[]>([])
+const getMenuTree = () => {
+  getMenuTreeApi().then((res) => (menuTreeDataSource.value = res))
+}
+
+const getRoleMenu = (id: string) => {
+  roleId.value = id
+  menuTreeDialogVisible.value = true
+  roleMenuPagingApi({ roleId: id, page: 0, size: 100000000 }).then((res) => {
+    const menuIds = res.content.map((data: { menuId: string }) => data.menuId)
+    treeRef.value!.setCheckedKeys(menuIds)
+  })
+}
+
+const saveRoleMeuns = () => {
+  const menuIds = treeRef.value!.getCheckedKeys()
+  addRoleMenuApi({ roleId: roleId.value, menuIds: menuIds.join(',') }).then(() => {
+    menuTreeDialogVisible.value = false
+  })
 }
 </script>

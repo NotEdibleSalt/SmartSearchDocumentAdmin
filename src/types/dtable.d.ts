@@ -28,7 +28,7 @@ export interface TableColumn extends BasicColumn {
 
 /** 表格顶部自定义函数类型 */
 interface render {
-  (row: TableData): VNode
+  (row: TableData): VNode | JSX.Element
 }
 
 /** 表格操作栏类型 */

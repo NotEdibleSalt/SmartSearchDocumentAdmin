@@ -39,7 +39,10 @@ import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus/es/components/form'
 import { loginApi } from '@/api/account'
 import { setLocalStorage } from '@/utils/storage'
+import { useRouteStore } from '@/stores/route'
+import router from '@/router'
 
+const routeStore = useRouteStore()
 const formRef = ref<FormInstance>()
 const formState = reactive({
   username: 'admin',
@@ -58,8 +61,8 @@ const login = async (formEl: FormInstance | undefined) => {
   }
 
   const result = await loginApi(formState)
-  setLocalStorage('token', result.data)
-  // router.push('/')
+  setLocalStorage('token', result)
+  router.push('/')
 }
 </script>
 
@@ -89,4 +92,3 @@ const login = async (formEl: FormInstance | undefined) => {
   }
 }
 </style>
-@/api/account

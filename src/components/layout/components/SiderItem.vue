@@ -1,9 +1,9 @@
 <template>
   <div class="sider-item">
     <template v-if="routeInfo && routeInfo.children">
-      <el-sub-menu :index="routeInfo.routePath ? routeInfo.routePath : routeInfo.key">
+      <el-sub-menu :index="routeInfo.routePath ? routeInfo.routePath : routeInfo.id">
         <template #title>
-          {{ routeInfo.title }}
+          {{ routeInfo.label }}
         </template>
         <div v-for="item in routeInfo.children" :index="item.routePath">
           <SiderItem :menuInfo="item" />
@@ -12,7 +12,7 @@
     </template>
     <template v-else>
       <el-menu-item :index="routeInfo.routePath">
-        {{ routeInfo.title }}
+        {{ routeInfo.label }}
       </el-menu-item>
     </template>
   </div>

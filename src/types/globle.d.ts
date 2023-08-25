@@ -1,9 +1,11 @@
 
 
 export interface IMenuTree {
-  key: string
-  title: string
-  routePath?: string
+  id: string
+  label: string
+  path: string
+  routeName: string
+  routePath: string
   children?: IMenuTree[]
 }
 

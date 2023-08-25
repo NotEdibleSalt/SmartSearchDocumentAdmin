@@ -104,7 +104,7 @@ export default defineComponent({
                     fit-input-width-icon={item.selectConfig?.fitInputWidth}
                     v-model={props.data[item.prop]}
                   >
-                    {item.selectConfig?.options.map((option) => {
+                    {item.selectConfig?.options?.map((option) => {
                       return (
                         <el-option
                           key={option.value}

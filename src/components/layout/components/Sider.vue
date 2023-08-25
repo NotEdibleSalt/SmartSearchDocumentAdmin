@@ -1,47 +1,22 @@
 <template>
   <div class="sider-title">{{ $t('sider.title') }}</div>
   <el-menu :router="true">
-    <SiderItem v-for="route in routers" :menuInfo="route" :key="route.key" />
+    <SiderItem v-for="route in routers" :menuInfo="route" :key="route.id" />
   </el-menu>
 </template>
 <script setup lang="ts">
+import { useRouteStore } from '@/stores/route'
 import SiderItem from './SiderItem.vue'
 import { computed } from 'vue'
+import { getLocalStorage } from '@/utils/storage'
 
+const routeStore = useRouteStore()
 const routers = computed(() => {
-  return [
-    {
-      key: 'setting',
-      title: '系统设置',
-      children: [
-        {
-          key: 'userManage',
-          title: '用户管理',
-          routePath: '/admin'
-        },
-        {
-          key: 'menuManage',
-          title: '菜单管理',
-          routePath: '/menu'
-        },
-        {
-          key: 'roleManage',
-          title: '角色管理',
-          routePath: '/role'
-        },
-        {
-          key: 'dictManage',
-          title: '字典管理',
-          routePath: '/dict'
-        }
-      ]
-    },
-    {
-      key: '123',
-      title: '123',
-      routePath: '/aa'
-    }
-  ]
+  const token = getLocalStorage<TokenI>('token')
+  if (token) {
+    return routeStore.getMenuTree(token?.loginId)
+  }
+  return []
 })
 </script>
 
